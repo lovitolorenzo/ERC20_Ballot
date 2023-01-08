@@ -21,6 +21,4 @@ typechain-types
 cache
 artifacts
 
-# Scripts files
-saves.ts
-sushiswapPrice.ts
+
