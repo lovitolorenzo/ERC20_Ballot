@@ -8,18 +8,24 @@ export async function deployToken(): Promise<{ contractAddress: string; accounts
 
 	const [deployer, acc1, acc2, acc3] = accounts;
 
-	//WAY TO FETCH AN EXISTING CONTRACT AVOIDING REDEPLOYING IT AND GRABBING AN EXISTING INSTANCE
+	// WAY TO FETCH AN EXISTING CONTRACT AVOIDING REDEPLOYING IT AND GRABBING AN EXISTING INSTANCE
 	const myTokenContractFactory = await ethers.getContractFactory("MyToken");
 	const myTokenContract = myTokenContractFactory.attach(contractAddress);
 
-	//ALTERNATIVE WAY TO FETCH AN EXISTING CONTRACT BY ABI
-	//const myTokenContract = new ethers.Contract(contractAddress, contractAbi)
-	//console.log(`Retaking contract avoiding redeploying, checking its totalSupply ${ethers.utils.formatEther(await myTokenContract.totalSupply())}\n`)
+	// OTHER WAYS TO FETCH AN EXISTING CONTRACT BY ABI:
 
-	//console.log("Delegating from acc1 to acc1\n");
+	// OPTION 1)
+	// const myTokenContract = await ethers.getContractAt("LotteryToken", tokenAddress); // Retaking contract by Contract Name and his Address
+	// console.log(`Retaking contract avoiding redeploying, checking its totalSupply ${ethers.utils.formatEther(await myTokenContract.totalSupply())}\n`)
+
+	// OPTION 2)
+	// const myTokenContract = new ethers.Contract(contractAddress, contractAbi) // Retaking contract by his Address and Contract ABI
+	// console.log(`Retaking contract avoiding redeploying, checking its totalSupply ${ethers.utils.formatEther(await myTokenContract.totalSupply())}\n`)
+
+	// console.log("Delegating from acc1 to acc1\n");
 	const delegateTx1 = await myTokenContract.connect(acc1).delegate(acc1.address);
 
-	//console.log("Delegating from acc2 to acc3\n");
+	// console.log("Delegating from acc2 to acc3\n");
 	const delegateTx2 = await myTokenContract.connect(acc2).delegate(acc3.address);
 
 	await Promise.all([delegateTx1.wait(), delegateTx2.wait()]);
@@ -48,9 +54,9 @@ export async function deployToken(): Promise<{ contractAddress: string; accounts
 	return { contractAddress, accounts };
 }
 
-// deployToken()
-//   .then(() => process.exit(0))
-//   .catch((error) => {
-//     console.error(error);
-//     process.exit(1);
-//   });
+//  deployToken()
+//    .then(() => process.exit(0))
+//    .catch((error) => {
+//      console.error(error);
+//      process.exit(1);
+//    });

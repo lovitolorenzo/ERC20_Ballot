@@ -1,6 +1,5 @@
 import { ethers } from "hardhat";
 import * as dotenv from "dotenv";
-import { MyToken } from "../typechain-types";
 import { MyTokenInterface } from "../typechain-types/contracts/ERC20Votes.sol/MyToken";
 import { Wallet } from "ethers";
 dotenv.config();
@@ -27,8 +26,7 @@ const fetchWalletFromMnemonic = (mnemonicArray: (string | undefined)[]): Wallet[
 };
 
 export async function mintTokens(): Promise<returnMintTokens> {
-	//const [deployer, acc1, acc2, acc3] = await ethers.getSigners(); //WAY TO FETCH SIGNER AND ACCOUNTS OF EVM'S DEPLOYED CONTRACTS
-
+	const [deployer1, acc11, acc21, acc31] = await ethers.getSigners(); //WAY TO FETCH SIGNER AND ACCOUNTS OF EVM'S DEPLOYED CONTRACTS
 	const [deployer, acc1, acc2, acc3] = fetchWalletFromMnemonic([MNEMONIC, RESERVE, RESERVE1, RESERVE3]);
 	console.log({ acc1, acc2, acc3 });
 	const myTokenContractFactory = await ethers.getContractFactory("MyToken");

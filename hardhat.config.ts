@@ -10,7 +10,7 @@ module.exports = {
 		goerli: {
 			accounts: [PRIVATE_KEY ? PRIVATE_KEY : ""], //deployer
 			url: API_URL,
-			blockGasLimit: 100000000429720,
+			blockGasLimit: 100000000000000,
 		},
 	},
 };
